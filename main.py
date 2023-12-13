@@ -5,6 +5,7 @@ workday_start = datetime.strptime('09:00', '%H:%M')
 workday_end = datetime.strptime('21:00', '%H:%M')
 
 busy = [
+    {'start': '09:30', 'stop': '09:50'},
     {'start': '10:30', 'stop': '10:50'},
     {'start': '18:40', 'stop': '18:50'},
     {'start': '14:40', 'stop': '15:50'},
@@ -31,7 +32,7 @@ def free_windows_list_datetime(intervals_list: list) -> list:
     current_time = workday_start
 
     for start, stop in sorted(intervals_list):
-        if (current_time + timedelta(minutes=30)) < start:
+        if (current_time + timedelta(minutes=30)) <= start:
             list_free_windows.append((current_time, start))
         current_time = stop
 
@@ -73,4 +74,4 @@ def list_free_windows_thirty_minutes(intervals_list: list) -> list:
     return [{'start': start.strftime('%H:%M'), 'stop': stop.strftime('%H:%M')} for start, stop in free_windows_thirty_minutes_list_datetime(intervals_list)]
 
 
-list_free_windows_thirty_minutes(busy_intervals)
+print(list_free_windows_thirty_minutes(busy_intervals))
